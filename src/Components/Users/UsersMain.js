@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ReactComponent as Add } from "../../assets/svg/add.svg";
+
 export default class UsersMain extends Component {
   render() {
     return (

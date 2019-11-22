@@ -1,8 +1,6 @@
 import React from "react";
 import { ReactComponent as Points } from "../../assets/svg/points.svg";
-import { ReactComponent as ToggleOn } from "../../assets/svg/toggle_on.svg";
-import { ReactComponent as ToggleOff } from "../../assets/svg/toggle_off.svg";
-import UserRoles from "../../assets/roles.json";
+// import { ReactComponent as ToggleOn } from "../../assets/svg/toggle_on.svg";
 
 function User(props) {
   const {
@@ -11,11 +9,8 @@ function User(props) {
     fathersLastName,
     mothersLastName,
     email,
-    roleId,
-    active
+    roleId
   } = props;
-
-
 
   return (
     <tr className="user-row">
@@ -31,9 +26,7 @@ function User(props) {
       <td>{mothersLastName}</td>
       <td>{email}</td>
       <td>{roleId}</td>
-      <td>
-        <ToggleOn />
-      </td>
+      <td>{/* <ToggleOn /> */}</td>
     </tr>
   );
 }

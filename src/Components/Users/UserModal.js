@@ -14,7 +14,6 @@ export default class UserModal extends Component {
         mothersLastName,
         email,
         roleId,
-        active
       } = this.props.userData;
    
     return (

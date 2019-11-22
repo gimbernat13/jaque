@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Modal.css";
-import Backdrop from "./Backdrop/Backdrop";
+
 // import ProjectSlider from "../Slider/ProjectSlider";
 export default class Modal extends Component {
   state = {

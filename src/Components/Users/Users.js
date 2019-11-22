@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import UserTable from "./UserTable";
 import UserData from "../../assets/users.json";
-import { ReactComponent as ToggleOn } from "../../assets/svg/toggle_on.svg";
 import { ReactComponent as Square } from "../../assets/svg/square.svg";
 import { ReactComponent as List } from "../../assets/svg/list.svg";
 import Backdrop from "../../Ui/Backdrop/Backdrop";
@@ -9,6 +8,7 @@ import UsersMain from "./UsersMain";
 import UserCards from "./UserCards";
 import Modal from "../../Ui/Modal";
 import "./Users.css";
+import { Pagination } from "./Pagination/Pagination";
 
 function compare(a, b) {
   if (a.name < b.name) {
@@ -44,7 +44,7 @@ class Users extends Component {
     modalOpen: false,
     activeCategory: null,
     currentPage: 1,
-    usersPerPage: 8,
+    usersPerPage: 4,
   };
 
 
@@ -105,7 +105,9 @@ class Users extends Component {
   };
 
 
-
+  paginate = pageNumber => {
+    this.setState({currentPage:pageNumber})
+  }
 
 
 
@@ -116,14 +118,14 @@ class Users extends Component {
 
 
   render() {
-    const indexOfLastUser = this.state.currentPage * this.state.user
-    const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage
-
+    const indexOfLastUser = this.state.currentPage * this.state.usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage;
+    const currentUsers = this.state.filteredUsers.slice(indexOfFirstUser, indexOfLastUser)
     const checkViewMode = () => {
       if (this.state.viewMode === "cards") {
-        return <UserCards filteredUsers={this.state.filteredUsers} />;
+        return <UserCards filteredUsers={currentUsers} />;
       } else {
-        return <UserTable filteredUsers={this.state.filteredUsers} />;
+        return <UserTable filteredUsers={currentUsers} />;
       }
     };
 
@@ -149,7 +151,7 @@ class Users extends Component {
             />
 
 
-            <form>
+            <form defaultValue="Hey">
               <select
                 onChange={this.handleRoleChange}
                 className="filter-input"
@@ -176,6 +178,8 @@ class Users extends Component {
           </div>
         </div>
         {checkViewMode()}
+
+        <Pagination paginate={this.paginate} usersPerPage={this.state.usersPerPage} totalUsers={this.state.filteredUsers.length} />
       </div>
     );
   }

@@ -22,7 +22,6 @@ render () {
     mothersLastName,
     email,
     roleId,
-    active
   } = this.props;
 
   
