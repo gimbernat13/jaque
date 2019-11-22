@@ -25,7 +25,7 @@ render () {
     active
   } = this.props;
 
-  console.log(this.props)
+  
   return (
   
       <div className="user-card shadow">

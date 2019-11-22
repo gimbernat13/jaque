@@ -8,13 +8,23 @@ import Backdrop from "../../Ui/Backdrop/Backdrop";
 import UsersMain from "./UsersMain";
 import UserCards from "./UserCards";
 import Modal from "../../Ui/Modal";
-import "./Users.css"
+import "./Users.css";
 
 function compare(a, b) {
   if (a.name < b.name) {
     return -1;
   }
   if (a.name > b.name) {
+    return 1;
+  }
+  return 0;
+}
+
+function compareNeg(a, b) {
+  if (a.name > b.name) {
+    return -1;
+  }
+  if (a.name < b.name) {
     return 1;
   }
   return 0;
@@ -31,14 +41,9 @@ class Users extends Component {
     searchTerm: "",
     users: this.mappedUsers,
     filteredUsers: this.mappedUsers,
-    modalOpen: false
+    modalOpen: false,
+    activeCategory: null
   };
-
-
-
-
-
-
 
   openModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
@@ -58,31 +63,44 @@ class Users extends Component {
     const filteredUsers = this.state.filteredUsers;
     filteredUsers.sort(compare);
     this.setState({ filteredUsers: filteredUsers });
-    console.log(filteredUsers);
+ 
+  };
+  sortDescending = () => {
+    const filteredUsers = this.state.filteredUsers;
+    filteredUsers.sort(compareNeg);
+    this.setState({ filteredUsers: filteredUsers });
+
   };
 
+  showAll = () => {
+    this.setState({ filteredUsers: this.state.users });
+  };
   filterUsers = searchTerm => {
     const filteredUsers = this.state.users.filter(user => {
       return user.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
     this.setState({ filteredUsers: filteredUsers });
-    console.log(this.state.filteredUsers);
   };
 
+  includesCategory = category => {
 
+    const filteredByCategory = this.state.users.filter(user => {
+      console.log(typeof category)
+      const categoryNum = parseInt(category, 10)
+      console.log(user.roleId === categoryNum)
+      // console.log(`Type of category ${typeof.category}`)
+      return user.roleId === categoryNum;
+    });
+    this.setState({ filteredUsers: filteredByCategory });
+  };
 
+  handleRoleChange = e => {
 
-
-
-
-
-
-
-
-
-
-
-
+    const inputValue = e.target.value
+    this.setState({ activeCategory: inputValue });
+    console.log(this.state.activeCategory);
+    this.includesCategory(e.target.value);
+  };
 
   render() {
     const checkViewMode = () => {
@@ -113,16 +131,25 @@ class Users extends Component {
               type="text"
               placeholder="Búsqueda"
             />
-        
 
-            <div className="filter-input" onClick={this.sortAscending}>
-              Ordenar Ascendente
-            </div>
-
+            
+            <form>
+              <select
+                onChange={this.handleRoleChange}
+                className="filter-input"
+                value={this.state.activeCategory}
+                name=""
+                id=""
+              >
+                <option value={1}>Owner</option>
+                <option value={2}>Admin</option>
+                <option value={3}>Staff</option>
+              </select>
+            </form>
+     
           </div>
-          <div classname="filter-bar-right">
+          <div className="filter-bar-right">
             <span>
-         
               <div className="view-mode-icon">
                 <List onClick={() => this.handleViewChange("table")} />
               </div>
@@ -133,8 +160,6 @@ class Users extends Component {
           </div>
         </div>
         {checkViewMode()}
-
-
       </div>
     );
   }
