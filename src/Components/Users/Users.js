@@ -42,8 +42,13 @@ class Users extends Component {
     users: this.mappedUsers,
     filteredUsers: this.mappedUsers,
     modalOpen: false,
-    activeCategory: null
+    activeCategory: null,
+    currentPage: 1,
+    usersPerPage: 8,
   };
+
+
+
 
   openModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
@@ -75,6 +80,8 @@ class Users extends Component {
   showAll = () => {
     this.setState({ filteredUsers: this.state.users });
   };
+
+
   filterUsers = searchTerm => {
     const filteredUsers = this.state.users.filter(user => {
       return user.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -83,26 +90,35 @@ class Users extends Component {
   };
 
   includesCategory = category => {
-
     const filteredByCategory = this.state.users.filter(user => {
-      console.log(typeof category)
       const categoryNum = parseInt(category, 10)
-      console.log(user.roleId === categoryNum)
-      // console.log(`Type of category ${typeof.category}`)
+      if (category=== null) {
+        console.log("heyo")
+      }
       return user.roleId === categoryNum;
     });
     this.setState({ filteredUsers: filteredByCategory });
   };
 
   handleRoleChange = e => {
-
-    const inputValue = e.target.value
-    this.setState({ activeCategory: inputValue });
-    console.log(this.state.activeCategory);
     this.includesCategory(e.target.value);
   };
 
+
+
+
+
+
+
+
+
+
+
+
   render() {
+    const indexOfLastUser = this.state.currentPage * this.state.user
+    const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage
+
     const checkViewMode = () => {
       if (this.state.viewMode === "cards") {
         return <UserCards filteredUsers={this.state.filteredUsers} />;
@@ -132,7 +148,7 @@ class Users extends Component {
               placeholder="Búsqueda"
             />
 
-            
+
             <form>
               <select
                 onChange={this.handleRoleChange}

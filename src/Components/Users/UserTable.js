@@ -3,7 +3,6 @@ import User from "./User"
 import "./UserTable.css"
 
 const UserTable = (props) => {
-  console.log(props)
   const mappedUsers = props.filteredUsers.map(user => {
     const {picture,name,fathersLastName,mothersLastName,email,roleId,active} = user;   //Destructuring 
    
