@@ -42,7 +42,7 @@ class Users extends Component {
     users: this.mappedUsers,
     filteredUsers: this.mappedUsers,
     modalOpen: false,
-    activeCategory: null,
+    activeCategory: "",
     currentPage: 1,
     usersPerPage: 4,
   };
@@ -106,7 +106,15 @@ class Users extends Component {
 
 
   paginate = pageNumber => {
-    this.setState({currentPage:pageNumber})
+    const pageNum = parseInt(pageNumber, 10)
+ 
+    this.setState({currentPage:pageNum})
+  }
+
+
+  handleUserCount = e => {
+    const userCount = parseInt(e.target.value , 10)
+    this.setState({usersPerPage : userCount})
   }
 
 
@@ -114,6 +122,15 @@ class Users extends Component {
 
 
 
+
+
+
+
+
+
+
+
+  
 
 
 
@@ -151,7 +168,7 @@ class Users extends Component {
             />
 
 
-            <form defaultValue="Hey">
+            <form value={this.state.activeCategory} defaultValue="Hey">
               <select
                 onChange={this.handleRoleChange}
                 className="filter-input"
@@ -164,6 +181,21 @@ class Users extends Component {
                 <option value={3}>Staff</option>
               </select>
             </form>
+
+            <form value={this.state.usersPerPage}defaultValue="Hey">
+              <select
+                onChange={this.handleUserCount}
+                className="filter-input"
+                value={this.state.usersPerPage}
+                name=""
+                id=""
+              >
+                <option value={4}>4</option>
+                <option value={8}>8</option>
+                <option value={16}>16</option>
+              </select>
+            </form>
+     
      
           </div>
           <div className="filter-bar-right">
