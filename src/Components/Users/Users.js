@@ -121,14 +121,14 @@ class Users extends Component {
   };
 
   submitForm = userData => {
-    console.log("USERJS submittting form");
-    console.log(userData.name);
-    const mierda = new User("diego", "cardaerperro","asdfasdf" , "poposita" , "mierda deperro")
- 
-    const prevState = [this.state.filteredUsers]
-    prevState.push(mierda)
-    this.setState({users: prevState})
-    console.log(this.state.users)
+    this.setState({ filteredUsers: [...this.state.filteredUsers, userData] }) 
+
+
+    // let mierdapopo = {name:userData.name , email: userData.email, fathersLastName:userData.fathersLastName, mothersLastName:userData.mothersLastName, roleId:userData.roleId }
+    // const prevState = [...this.state]
+    // prevState.push(mierdapopo)
+    // this.setState({filteredUsers : prevState})
+    // console.log(this.state.filteredUsers)
  
   };
 
@@ -232,6 +232,7 @@ class Users extends Component {
           paginate={this.paginate}
           usersPerPage={this.state.usersPerPage}
           totalUsers={this.state.filteredUsers.length}
+          
         />
       </div>
     );
