@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import UserTable from "./UserTable";
 import UserData from "../../assets/users.json";
-import { ReactComponent as Square } from "../../assets/svg/square.svg";
-import { ReactComponent as List } from "../../assets/svg/list.svg";
 import Backdrop from "../../Ui/Backdrop/Backdrop";
 import UsersMain from "./UsersMain";
 import UserCards from "./UserCards";
 import Modal from "../../Ui/Modal";
 import "./Users.css";
 import { Pagination } from "./Pagination/Pagination";
+import { FilterSection } from "./FilterSection";
+import { ReactComponent as Square } from "../../assets/svg/square.svg";
+import { ReactComponent as List } from "../../assets/svg/list.svg";
 
-class Person {
+class User {
   constructor(picture, name, fathersLastName, mothersLastName, email, roleId) {
     this.name = name;
     this.fathersLastName = fathersLastName;
@@ -122,7 +123,7 @@ class Users extends Component {
   submitForm = userData => {
     console.log("USERJS submittting form");
     console.log(userData.name);
-    const mierda = new Person("diego", "cardaerperro","asdfasdf" , "poposita" , "mierda deperro")
+    const mierda = new User("diego", "cardaerperro","asdfasdf" , "poposita" , "mierda deperro")
  
     const prevState = [this.state.filteredUsers]
     prevState.push(mierda)
@@ -159,7 +160,10 @@ class Users extends Component {
           </div>
         ) : null}
         <UsersMain openModal={this.openModal} />
-        <div className="filter-bar">
+
+       
+  {/* Change Filter Bar into own Component  */}
+  <div className="filter-bar">
           <div className="filter-bar-left">
             <input
               onChange={this.handleInputChange}
@@ -213,7 +217,15 @@ class Users extends Component {
             </span>
           </div>
         </div>
-        {checkViewMode()}
+       
+
+       {checkViewMode()}
+
+
+
+
+
+
 
         <Pagination
           currentPage={this.state.currentPage}
