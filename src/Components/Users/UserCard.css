@@ -1,11 +1,8 @@
 /*                         Cards  */
 
-.user-cards {
-    background: white;
-    text-align: center;
-    padding-left: 10px;
-  
-    /* width: 100%; */
+  .user-cards{
+    position: relative;
+    margin: auto;
   }
   
   .user-card {

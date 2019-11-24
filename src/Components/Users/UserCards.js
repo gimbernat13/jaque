@@ -26,8 +26,11 @@ export default function UserCards(props) {
       />
     );
   });
-  return <div className="user-cards">
-    {mappedUsers}
+  return (
+  <div className="container">
+  <div className="user-cards">
 
-  </div>;
+  </div>
+  {mappedUsers}
+  </div>);
 }

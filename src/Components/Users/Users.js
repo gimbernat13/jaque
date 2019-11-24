@@ -37,14 +37,14 @@ class Users extends Component {
 
   state = {
     isShowing: false,
-    viewMode: "cards",
+    viewMode: "table",
     searchTerm: "",
     users: this.mappedUsers,
     filteredUsers: this.mappedUsers,
     modalOpen: false,
     activeCategory: "",
     currentPage: 1,
-    usersPerPage: 4,
+    usersPerPage: 8,
   };
 
 
@@ -92,9 +92,6 @@ class Users extends Component {
   includesCategory = category => {
     const filteredByCategory = this.state.users.filter(user => {
       const categoryNum = parseInt(category, 10)
-      if (category=== null) {
-        console.log("heyo")
-      }
       return user.roleId === categoryNum;
     });
     this.setState({ filteredUsers: filteredByCategory });
@@ -119,6 +116,9 @@ class Users extends Component {
 
 
 
+  submitForm = () => {
+    
+  }
 
 
 
@@ -130,7 +130,6 @@ class Users extends Component {
 
 
 
-  
 
 
 
@@ -151,6 +150,7 @@ class Users extends Component {
         {this.state.modalOpen ? (
           <div>
             <Modal
+              submitForm = {this.submitForm}
               openModal={this.openModal}
               projectDetails={this.props.projectDetails}
             />
@@ -182,7 +182,7 @@ class Users extends Component {
               </select>
             </form>
 
-            <form value={this.state.usersPerPage}defaultValue="Hey">
+            <form value={this.state.usersPerPage} defaultValue="Hey">
               <select
                 onChange={this.handleUserCount}
                 className="filter-input"
@@ -195,6 +195,12 @@ class Users extends Component {
                 <option value={16}>16</option>
               </select>
             </form>
+            <div onClick={this.sortAscending} className="filter-input">
+              Sort ascending
+            </div>
+            <div onClick={this.sortDescending} className="filter-input">
+              Sort Descending
+            </div>
      
      
           </div>
@@ -211,7 +217,7 @@ class Users extends Component {
         </div>
         {checkViewMode()}
 
-        <Pagination paginate={this.paginate} usersPerPage={this.state.usersPerPage} totalUsers={this.state.filteredUsers.length} />
+        <Pagination currentPage={this.state.currentPage} paginate={this.paginate} usersPerPage={this.state.usersPerPage} totalUsers={this.state.filteredUsers.length} />
       </div>
     );
   }
