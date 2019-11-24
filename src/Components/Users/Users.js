@@ -10,6 +10,19 @@ import Modal from "../../Ui/Modal";
 import "./Users.css";
 import { Pagination } from "./Pagination/Pagination";
 
+class Person {
+  constructor(picture, name, fathersLastName, mothersLastName, email, roleId) {
+    this.name = name;
+    this.fathersLastName = fathersLastName;
+    this.mothersLastName = mothersLastName;
+    this.email = email;
+    this.roleId = roleId;
+    // this.lastName = lname;
+  }
+}
+
+
+
 function compare(a, b) {
   if (a.name < b.name) {
     return -1;
@@ -44,11 +57,8 @@ class Users extends Component {
     modalOpen: false,
     activeCategory: "",
     currentPage: 1,
-    usersPerPage: 8,
+    usersPerPage: 8
   };
-
-
-
 
   openModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
@@ -68,19 +78,16 @@ class Users extends Component {
     const filteredUsers = this.state.filteredUsers;
     filteredUsers.sort(compare);
     this.setState({ filteredUsers: filteredUsers });
- 
   };
   sortDescending = () => {
     const filteredUsers = this.state.filteredUsers;
     filteredUsers.sort(compareNeg);
     this.setState({ filteredUsers: filteredUsers });
-
   };
 
   showAll = () => {
     this.setState({ filteredUsers: this.state.users });
   };
-
 
   filterUsers = searchTerm => {
     const filteredUsers = this.state.users.filter(user => {
@@ -91,7 +98,7 @@ class Users extends Component {
 
   includesCategory = category => {
     const filteredByCategory = this.state.users.filter(user => {
-      const categoryNum = parseInt(category, 10)
+      const categoryNum = parseInt(category, 10);
       return user.roleId === categoryNum;
     });
     this.setState({ filteredUsers: filteredByCategory });
@@ -101,42 +108,36 @@ class Users extends Component {
     this.includesCategory(e.target.value);
   };
 
-
   paginate = pageNumber => {
-    const pageNum = parseInt(pageNumber, 10)
- 
-    this.setState({currentPage:pageNum})
-  }
+    const pageNum = parseInt(pageNumber, 10);
 
+    this.setState({ currentPage: pageNum });
+  };
 
   handleUserCount = e => {
-    const userCount = parseInt(e.target.value , 10)
-    this.setState({usersPerPage : userCount})
-  }
+    const userCount = parseInt(e.target.value, 10);
+    this.setState({ usersPerPage: userCount });
+  };
 
-
-
-  submitForm = () => {
-    
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
+  submitForm = userData => {
+    console.log("USERJS submittting form");
+    console.log(userData.name);
+    const mierda = new Person("diego", "cardaerperro","asdfasdf" , "poposita" , "mierda deperro")
+ 
+    const prevState = [this.state.filteredUsers]
+    prevState.push(mierda)
+    this.setState({users: prevState})
+    console.log(this.state.users)
+ 
+  };
 
   render() {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage;
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage;
-    const currentUsers = this.state.filteredUsers.slice(indexOfFirstUser, indexOfLastUser)
+    const currentUsers = this.state.filteredUsers.slice(
+      indexOfFirstUser,
+      indexOfLastUser
+    );
     const checkViewMode = () => {
       if (this.state.viewMode === "cards") {
         return <UserCards filteredUsers={currentUsers} />;
@@ -150,7 +151,7 @@ class Users extends Component {
         {this.state.modalOpen ? (
           <div>
             <Modal
-              submitForm = {this.submitForm}
+              submitForm={this.submitForm}
               openModal={this.openModal}
               projectDetails={this.props.projectDetails}
             />
@@ -166,7 +167,6 @@ class Users extends Component {
               type="text"
               placeholder="Búsqueda"
             />
-
 
             <form value={this.state.activeCategory} defaultValue="Hey">
               <select
@@ -201,8 +201,6 @@ class Users extends Component {
             <div onClick={this.sortDescending} className="filter-input">
               Sort Descending
             </div>
-     
-     
           </div>
           <div className="filter-bar-right">
             <span>
@@ -217,7 +215,12 @@ class Users extends Component {
         </div>
         {checkViewMode()}
 
-        <Pagination currentPage={this.state.currentPage} paginate={this.paginate} usersPerPage={this.state.usersPerPage} totalUsers={this.state.filteredUsers.length} />
+        <Pagination
+          currentPage={this.state.currentPage}
+          paginate={this.paginate}
+          usersPerPage={this.state.usersPerPage}
+          totalUsers={this.state.filteredUsers.length}
+        />
       </div>
     );
   }

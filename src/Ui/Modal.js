@@ -18,6 +18,7 @@ export default class Modal extends Component {
     const value = e.target.value;
     console.log(this.state.userData.name)
     const pitonegro = e.target.name
+    
   
     // this.setState({
     //   ...this.state.userData,
@@ -42,11 +43,14 @@ export default class Modal extends Component {
   }
 
   submitForm = () => {
-    this.props.submitForm(this.state); 
+    console.log(this.state.userData)
+    console.log("Clicked submit Form")
+    this.props.submitForm(this.state.userData); 
+
+
   }
 
   
-
   render() {
     return (
       <div className="Modal container ">
@@ -117,7 +121,7 @@ export default class Modal extends Component {
           <div onClick={this.props.openModal} className="button">
             Cancelar
           </div>
-          <div onClick={this.props.submitForm(this.state)} className="button">
+          <div onClick={this.submitForm} className="button">
             Enviar
           </div>
         </div>
