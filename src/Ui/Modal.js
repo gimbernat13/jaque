@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Modal.css";
 
+
+
 // import ProjectSlider from "../Slider/ProjectSlider";
 export default class Modal extends Component {
   state = {
@@ -13,44 +15,37 @@ export default class Modal extends Component {
       email: ""
     }
   };
-
-  handleChange = (e) => {
-    const value = e.target.value;
-    console.log(this.state.userData.name)
-    const pitonegro = e.target.name
-    
   
-    // this.setState({
-    //   ...this.state.userData,
-    //   [e.target.name]: value
-
-      this.setState(prevState => ({
-        userData: {                   // object that we want to update
-            ...prevState.userData,    // keep all other key-value pairs
-            [pitonegro]: value       // update the value of specific key
-        }
-    }))
+  componentDidMount() {
+    if (this.props.userData ) {
+      this.setState({userData : this.props.userData})
+    }
+  }
+  handleChange = e => {
+    const value = e.target.value;
+    console.log(this.state.userData.name);
+    const name = e.target.name;
+    
+    this.setState(prevState => ({
+      userData: {
+        // object that we want to update
+        ...prevState.userData, // keep all other key-value pairs
+        [name]: value // update the value of specific key
+      }
+    }));
 
     // });
 
-
-
-    console.log(this.state.userData)
-
-   
-   
-
-  }
+    console.log(this.state.userData);
+  };
 
   submitForm = () => {
-    console.log(this.state.userData)
-    console.log("Clicked submit Form")
-    this.props.submitForm(this.state.userData); 
+    console.log(this.state.userData);
+    console.log("Clicked submit Form");
+    this.props.submitForm(this.state.userData);
+    this.props.openModal();
+  };
 
-
-  }
-
-  
   render() {
     return (
       <div className="Modal container ">

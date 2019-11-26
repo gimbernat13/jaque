@@ -11,7 +11,6 @@ export const Pagination = ({ totalUsers, usersPerPage, paginate , currentPage}) 
       return "darkorange"
     }
   }
-
   
   return (
     <div>

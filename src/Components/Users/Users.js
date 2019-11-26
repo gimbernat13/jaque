@@ -121,16 +121,14 @@ class Users extends Component {
   };
 
   submitForm = userData => {
-    this.setState({ filteredUsers: [...this.state.filteredUsers, userData] }) 
-
-
-    // let mierdapopo = {name:userData.name , email: userData.email, fathersLastName:userData.fathersLastName, mothersLastName:userData.mothersLastName, roleId:userData.roleId }
-    // const prevState = [...this.state]
-    // prevState.push(mierdapopo)
-    // this.setState({filteredUsers : prevState})
-    // console.log(this.state.filteredUsers)
- 
+    this.setState({ filteredUsers: [...this.state.filteredUsers, userData] })  
   };
+
+
+  editUser = user => {
+
+    
+  }
 
   render() {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage;
@@ -152,9 +150,9 @@ class Users extends Component {
         {this.state.modalOpen ? (
           <div>
             <Modal
+           
               submitForm={this.submitForm}
               openModal={this.openModal}
-              projectDetails={this.props.projectDetails}
             />
             <Backdrop click={this.openModal} />
           </div>
@@ -217,15 +215,8 @@ class Users extends Component {
             </span>
           </div>
         </div>
-       
 
        {checkViewMode()}
-
-
-
-
-
-
 
         <Pagination
           currentPage={this.state.currentPage}
