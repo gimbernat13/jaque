@@ -1,7 +1,7 @@
 import React from "react";
 import { UserCard } from "./UserCard";
 
-export default function UserCards(props) {
+export default function UserCards(props) {  
   const mappedUsers = props.filteredUsers.map(user => {
     const {
       picture,
@@ -22,10 +22,15 @@ export default function UserCards(props) {
         email={email}
         roleId={roleId}
         active={active}
-        key={email}
+      
+        key={email} 
+        openModal={props.openModal} 
+        deleteUser={props.deleteUser}     
       />
     );
   });
+
+
   return (
   <div className="container">
   <div className="user-cards">

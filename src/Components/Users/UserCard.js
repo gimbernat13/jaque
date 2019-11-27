@@ -11,19 +11,26 @@ export class UserCard extends Component {
     isShowing: false
   };
   openModal = () => {
-    this.setState({ modalOpen: !this.state.modalOpen });
+    console.log("opening modal");
+    this.setState({ isShowing: !this.state.isShowing });
+    console.log(this.state.isShowing);
   };
 
-  isLoggedIn() {
+  isModalShowing() {
     if (this.state.isShowing) {
       return (
         <React.Fragment>
           <Backdrop click={this.openModal} />
-          <Modal userData={this.props} />
+          <Modal openModal={this.props.openModal} userData={this.props} />
         </React.Fragment>
       );
     }
   }
+
+  deleteUser = user => {
+    this.props.deleteUser(this.props.email)
+  }
+
   render() {
     const {
       picture,
@@ -36,7 +43,7 @@ export class UserCard extends Component {
 
     return (
       <div className="user-card shadow">
-        {this.isShowing}
+        {this.isModalShowing()}
         <div className="user-card-inner">
           <div className="user-card-top">
             <div id="top-left-points">
@@ -54,7 +61,7 @@ export class UserCard extends Component {
             <ToggleOn style={{ marginLeft: "10%" }} />
             <div className="user-card-buttons">
               <Eye onClick={this.openModal} />
-              <Trash />
+              <Trash onClick={this.deleteUser}/>
             </div>
           </div>
         </div>

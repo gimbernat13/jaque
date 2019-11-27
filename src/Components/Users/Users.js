@@ -22,8 +22,6 @@ class User {
   }
 }
 
-
-
 function compare(a, b) {
   if (a.name < b.name) {
     return -1;
@@ -68,7 +66,6 @@ class Users extends Component {
   handleInputChange = e => {
     this.setState({ searchTerm: e.target.value });
     this.filterUsers(e.target.value);
-    // this.setState({filteredUsers: })
   };
 
   handleViewChange = mode => {
@@ -120,48 +117,67 @@ class Users extends Component {
     this.setState({ usersPerPage: userCount });
   };
 
+  ////////////////// CRUD ///////////////
+
   submitForm = userData => {
-    this.setState({ filteredUsers: [...this.state.filteredUsers, userData] })  
+    this.setState({ filteredUsers: [...this.state.filteredUsers, userData] });
+  };
+
+  editUser = user => {};
+
+  deleteUser = (user) => {
+    console.log(user)
+    const users = this.state.filteredUsers.filter(u => u.email !== user)
+    console.log(users)
+    this.setState({filteredUsers: users})
+
+    // console.log(this.props.email)
+    // const users = this.state.filteredUsers.filter(i => i.email !== user.email)
+  
+    // this.setState({filteredUsers : users})
   };
 
 
-  editUser = user => {
 
-    
-  }
+
+
 
   render() {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage;
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage;
-    const currentUsers = this.state.filteredUsers.slice(
+    const filteredUsers = this.state.filteredUsers.slice(
       indexOfFirstUser,
       indexOfLastUser
     );
     const checkViewMode = () => {
       if (this.state.viewMode === "cards") {
-        return <UserCards filteredUsers={currentUsers} />;
+        return <UserCards deleteUser={this.deleteUser} openModal={this.openModal} filteredUsers={filteredUsers} />;
       } else {
-        return <UserTable filteredUsers={currentUsers} />;
+        return <UserTable filteredUsers={filteredUsers} />;
       }
     };
 
+
+
+
     return (
+       /*=================Modal=================== */
+
       <div>
         {this.state.modalOpen ? (
           <div>
-            <Modal
-           
-              submitForm={this.submitForm}
-              openModal={this.openModal}
-            />
+            <Modal submitForm={this.submitForm} openModal={this.openModal} />
             <Backdrop click={this.openModal} />
           </div>
         ) : null}
         <UsersMain openModal={this.openModal} />
 
-       
-  {/* Change Filter Bar into own Component  */}
-  <div className="filter-bar">
+
+
+
+        {/*=================Filters and Sorting=================== */}
+
+        <div className="filter-bar">
           <div className="filter-bar-left">
             <input
               onChange={this.handleInputChange}
@@ -204,6 +220,8 @@ class Users extends Component {
               Sort Descending
             </div>
           </div>
+
+          {/*=================View Mode =================== */}
           <div className="filter-bar-right">
             <span>
               <div className="view-mode-icon">
@@ -215,15 +233,15 @@ class Users extends Component {
             </span>
           </div>
         </div>
+        {checkViewMode()}
 
-       {checkViewMode()}
+        {/*=================Pagination=================== */}
 
         <Pagination
           currentPage={this.state.currentPage}
           paginate={this.paginate}
           usersPerPage={this.state.usersPerPage}
           totalUsers={this.state.filteredUsers.length}
-          
         />
       </div>
     );
