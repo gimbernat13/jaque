@@ -25,7 +25,8 @@ export default function UserCards(props) {
       
         key={email} 
         openModal={props.openModal} 
-        deleteUser={props.deleteUser}     
+        deleteUser={props.deleteUser}   
+        editUser= {props.editUser}  
       />
     );
   });

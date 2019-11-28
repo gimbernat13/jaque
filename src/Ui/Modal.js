@@ -9,7 +9,8 @@ export default class Modal extends Component {
       fathersLastName: "",
       mothersLastName: "",
       roleId: "",
-      email: ""
+      email: "",
+      picture:""
     }
   };
 
@@ -34,7 +35,17 @@ export default class Modal extends Component {
     this.props.openModal();
   };
 
+  editUserSubmit = () => {
+    console.log(this.state.userData)
+    this.props.editUser(this.state.userData)
+    
+  }
+
+
+
   render() {
+
+    console.log(this.props.editUser())
     return (
       <div className="Modal container ">
         <div className="modal-top">
@@ -42,7 +53,7 @@ export default class Modal extends Component {
           <div className="modal-picture-section">
             <div>
               <h5>Foto de perfil</h5>
-              <img className="user-picture-lg" src="" alt="Imágen" />
+              <img className="user-picture-lg" src={this.state.userData.picture} alt="Imágen" />
             </div>
             <div>
               <p>JPG, PNG | Tamaño mínimo de 300px x 300px </p>
@@ -104,7 +115,7 @@ export default class Modal extends Component {
           <div onClick={this.props.openModal} className="button">
             Cancelar
           </div>
-          <div onClick={this.submitForm} className="button">
+          <div onClick={this.editUserSubmit}className="button">
             Enviar
           </div>
         </div>

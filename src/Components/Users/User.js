@@ -26,7 +26,7 @@ function User(props) {
       <td>{mothersLastName}</td>
       <td>{email}</td>
       <td>{roleId}</td>
-      <td>{/* <ToggleOn /> */}</td>
+      {/* <td><ToggleOn /></td> */}
     </tr>
   );
 }

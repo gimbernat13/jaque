@@ -49,7 +49,7 @@ class Users extends Component {
 
   state = {
     isShowing: false,
-    viewMode: "table",
+    viewMode: "cards",
     searchTerm: "",
     users: this.mappedUsers,
     filteredUsers: this.mappedUsers,
@@ -72,6 +72,8 @@ class Users extends Component {
     this.setState({ viewMode: mode });
   };
 
+
+  /*=================Filtering and Sorting =================== */
   sortAscending = () => {
     const filteredUsers = this.state.filteredUsers;
     filteredUsers.sort(compare);
@@ -86,6 +88,8 @@ class Users extends Component {
   showAll = () => {
     this.setState({ filteredUsers: this.state.users });
   };
+
+
 
   filterUsers = searchTerm => {
     const filteredUsers = this.state.users.filter(user => {
@@ -106,6 +110,11 @@ class Users extends Component {
     this.includesCategory(e.target.value);
   };
 
+
+
+
+    /*=================View Mode And Pagination=================== */
+
   paginate = pageNumber => {
     const pageNum = parseInt(pageNumber, 10);
 
@@ -123,24 +132,21 @@ class Users extends Component {
     this.setState({ filteredUsers: [...this.state.filteredUsers, userData] });
   };
 
-  editUser = user => {};
-
-  deleteUser = (user) => {
+  editUser = user => {
     console.log(user)
-    const users = this.state.filteredUsers.filter(u => u.email !== user)
-    console.log(users)
-    this.setState({filteredUsers: users})
-
-    // console.log(this.props.email)
-    // const users = this.state.filteredUsers.filter(i => i.email !== user.email)
-  
-    // this.setState({filteredUsers : users})
+     
+    
+    // const userToEdit = this.state.filteredUsers.find(u => u === user)
+    // console.log(userToEdit)
+    
   };
 
+  deleteUser = user => {
+    console.log("Deleting" + user)
+    const users = this.state.filteredUsers.filter(u => u.email !== user);
+    this.setState({ filteredUsers: users });
 
-
-
-
+  };
 
   render() {
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage;
@@ -151,17 +157,22 @@ class Users extends Component {
     );
     const checkViewMode = () => {
       if (this.state.viewMode === "cards") {
-        return <UserCards deleteUser={this.deleteUser} openModal={this.openModal} filteredUsers={filteredUsers} />;
+        return (
+          <UserCards
+            deleteUser={this.deleteUser}
+            openModal={this.openModal}
+            filteredUsers={filteredUsers}
+            editUser= {this.editUser}
+
+          />
+        );
       } else {
         return <UserTable filteredUsers={filteredUsers} />;
       }
     };
 
-
-
-
     return (
-       /*=================Modal=================== */
+      /*=================Modal=================== */
 
       <div>
         {this.state.modalOpen ? (
@@ -171,9 +182,6 @@ class Users extends Component {
           </div>
         ) : null}
         <UsersMain openModal={this.openModal} />
-
-
-
 
         {/*=================Filters and Sorting=================== */}
 
