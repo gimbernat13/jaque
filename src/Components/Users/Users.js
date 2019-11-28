@@ -62,6 +62,10 @@ class Users extends Component {
   openModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
+  closeModal = () => {
+    console.log("closing all the shit")
+    this.setState({modalOpens: false})
+  }
 
   handleInputChange = e => {
     this.setState({ searchTerm: e.target.value });
@@ -71,7 +75,6 @@ class Users extends Component {
   handleViewChange = mode => {
     this.setState({ viewMode: mode });
   };
-
 
   /*=================Filtering and Sorting =================== */
   sortAscending = () => {
@@ -88,8 +91,6 @@ class Users extends Component {
   showAll = () => {
     this.setState({ filteredUsers: this.state.users });
   };
-
-
 
   filterUsers = searchTerm => {
     const filteredUsers = this.state.users.filter(user => {
@@ -110,10 +111,7 @@ class Users extends Component {
     this.includesCategory(e.target.value);
   };
 
-
-
-
-    /*=================View Mode And Pagination=================== */
+  /*=================View Mode And Pagination=================== */
 
   paginate = pageNumber => {
     const pageNum = parseInt(pageNumber, 10);
@@ -132,26 +130,36 @@ class Users extends Component {
     this.setState({ filteredUsers: [...this.state.filteredUsers, userData] });
   };
 
-  editUser = user => {
+  editUserSubmit = (user) => {
+    console.log(typeof user.id)
+    console.log(this.state.filteredUsers[user.id])
+    const filteredUsers = this.state.filteredUsers
+
+
+    filteredUsers[user.id] = user
+
+   console.log(filteredUsers)
+  this.setState({filteredUsers: filteredUsers})
+    
     console.log(user)
-     
-    
-    // const userToEdit = this.state.filteredUsers.find(u => u === user)
-    // console.log(userToEdit)
-    
+
+
+  
   };
 
+  
   deleteUser = user => {
-    console.log("Deleting" + user)
+    console.log("Deleting" + user);
     const users = this.state.filteredUsers.filter(u => u.email !== user);
     this.setState({ filteredUsers: users });
-
   };
 
   render() {
+    console.log(this.state.filteredUsers)
     const indexOfLastUser = this.state.currentPage * this.state.usersPerPage;
     const indexOfFirstUser = indexOfLastUser - this.state.usersPerPage;
-    const filteredUsers = this.state.filteredUsers.slice(
+    const useresfiltrados = this.state.filteredUsers
+    const filteredUsers = useresfiltrados.slice(
       indexOfFirstUser,
       indexOfLastUser
     );
@@ -162,8 +170,7 @@ class Users extends Component {
             deleteUser={this.deleteUser}
             openModal={this.openModal}
             filteredUsers={filteredUsers}
-            editUser= {this.editUser}
-
+            editUserSubmit={this.editUserSubmit}
           />
         );
       } else {
@@ -222,10 +229,10 @@ class Users extends Component {
               </select>
             </form>
             <div onClick={this.sortAscending} className="filter-input">
-              Sort ascending
+              Ordenar de A-Z
             </div>
             <div onClick={this.sortDescending} className="filter-input">
-              Sort Descending
+              Ordenar de Z-A
             </div>
           </div>
 

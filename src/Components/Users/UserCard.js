@@ -13,6 +13,7 @@ export class UserCard extends Component {
   openModal = () => {
     this.setState({ isShowing: !this.state.isShowing });
   };
+  
 
   isModalShowing() {
     if (this.state.isShowing) {
@@ -20,8 +21,9 @@ export class UserCard extends Component {
         <React.Fragment>
           <Backdrop click={this.openModal} />
           <Modal
-            editUser={this.props.editUser}
+            editUserSubmit={this.props.editUserSubmit}
             openModal={this.props.openModal}
+            closeModal={this.props.openModal}
             userData={this.props}
           />
         </React.Fragment>
@@ -33,11 +35,6 @@ export class UserCard extends Component {
     this.props.deleteUser(this.props.email);
   };
 
-  editUser = user => {
-    this.openModal();
-    console.log(this.props)
-    this.props.editUser(this.props);
-  };
 
   render() {
     const {
@@ -68,7 +65,7 @@ export class UserCard extends Component {
           <div className="user-card-bottom">
             <ToggleOn style={{ marginLeft: "10%" }} />
             <div className="user-card-buttons">
-              <Eye onClick={this.editUser} />
+              <Eye onClick={this.openModal} />
               <Trash onClick={this.deleteUser} />
             </div>
           </div>

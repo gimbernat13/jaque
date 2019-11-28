@@ -4,13 +4,15 @@ import "./Modal.css";
 export default class Modal extends Component {
   state = {
     isOpen: false,
+    editMode: false, 
     userData: {
       name: "",
       fathersLastName: "",
       mothersLastName: "",
       roleId: "",
       email: "",
-      picture:""
+      picture:"",
+      id: "",
     }
   };
 
@@ -30,22 +32,24 @@ export default class Modal extends Component {
     }));
   };
 
+
+
   submitForm = () => {
     this.props.submitForm(this.state.userData);
-    this.props.openModal();
+    // this.props.openModal();
   };
 
   editUserSubmit = () => {
-    console.log(this.state.userData)
-    this.props.editUser(this.state.userData)
-    
+    this.props.editUserSubmit(this.state.userData)
+    // console.log(this.state.userData)
+    // this.props.openModal()
   }
 
 
 
   render() {
 
-    console.log(this.props.editUser())
+    
     return (
       <div className="Modal container ">
         <div className="modal-top">
@@ -112,7 +116,7 @@ export default class Modal extends Component {
           </div>
         </div>
         <div className="modal-bottom">
-          <div onClick={this.props.openModal} className="button">
+          <div onClick={""} className="button">
             Cancelar
           </div>
           <div onClick={this.editUserSubmit}className="button">

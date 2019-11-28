@@ -2,7 +2,8 @@ import React from "react";
 import { UserCard } from "./UserCard";
 
 export default function UserCards(props) {  
-  const mappedUsers = props.filteredUsers.map(user => {
+ 
+  const mappedUsers = props.filteredUsers.map((user , index) => {
     const {
       picture,
       name,
@@ -22,11 +23,13 @@ export default function UserCards(props) {
         email={email}
         roleId={roleId}
         active={active}
-      
-        key={email} 
+
+        key={index}
+        id={index} 
         openModal={props.openModal} 
+        closeModal = {props.closeModal}
         deleteUser={props.deleteUser}   
-        editUser= {props.editUser}  
+        editUserSubmit= {props.editUserSubmit}  
       />
     );
   });
